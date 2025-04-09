@@ -13,7 +13,7 @@ node_modules/
 npm-debug.log*
 
 # Archivos de construcción
-/build
+# /build
 /dist
 
 # Editor/IDE
@@ -35,6 +35,6 @@ public_html/.env
 # Añade estas líneas
 src/
 *.env
-testfile.txt
+*testfile.txt
 
 base.html
