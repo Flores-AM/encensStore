@@ -13,12 +13,14 @@ const clean = require('gulp-clean');
 const webp = require('gulp-webp');
 const plumber = require('gulp-plumber');
 const order = require('gulp-order');
+const htmlmin = require('gulp-htmlmin');
 
 const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
     imagenes: 'src/img/**/*',
-    backend: 'backend/**/*.js' // Nueva ruta para el backend
+    backend: 'backend/**/*.js', // Nueva ruta para el backend
+    html: 'paginas/*.html' // Nueva ruta para el backend
 };
 
 function css() {
@@ -27,7 +29,7 @@ function css() {
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(sourcemaps.write('.'))
-        .pipe(dest('build/css'));
+        .pipe(dest('public_html/css'));  // ← Cambiado
 }
 
 function javascript() {
@@ -45,32 +47,33 @@ function javascript() {
         .pipe(concat('bundle.min.js'))
         .pipe(terser())
         .pipe(sourcemaps.write('.'))
-        .pipe(dest('build/js'));
+        .pipe(dest('public_html/js'));
 }
 
 function imagenes() {
     return src('src/img/**/*.{jpg,jpeg,png,gif,svg}')
         .pipe(cache(imagemin({ optimizationLevel: 3 }))) // ← Compresión
-        .pipe(dest('build/img'));
+        .pipe(dest('public_html/img'));
 }
 
 function versionWebp() {
     return src(paths.imagenes)
         .pipe(webp())
-        .pipe(dest('build/img'));
+        .pipe(dest('public_html/img'));
 }
 
 function copyHtml() {
-    return src('index.html')
-        .pipe(dest('build'));
+    return src(paths.html)  // Ahora usa la ruta definida
+        .pipe(dest('public_html'));
 }
 
-const htmlmin = require('gulp-htmlmin');
-
 function minifyHtml() {
-    return src('index.html')
-        .pipe(htmlmin({ collapseWhitespace: true }))
-        .pipe(dest('build'));
+    return src(paths.html)
+        .pipe(htmlmin({ 
+            collapseWhitespace: true,
+            removeComments: true  // Opcional: elimina comentarios
+        }))
+        .pipe(dest('public_html'));
 }
 
 // Nueva tarea para el backend
@@ -85,7 +88,7 @@ function backend() {
         '!backend/.env' // ← Excluye .env
     ], { allowEmpty: true })
     .pipe(plumber()) // ← Manejo de errores
-    .pipe(dest('build'));
+    .pipe(dest('public_html/backend'));
 }
 
 function watchArchivos() {
@@ -97,7 +100,7 @@ function watchArchivos() {
 }
 
 function limpiarBuild() {
-    return src('build', {read: false, allowEmpty: true})
+    return src('public_html', {read: false, allowEmpty: true})
         .pipe(clean());
 }
 

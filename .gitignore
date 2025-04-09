@@ -1,40 +1,41 @@
-node_modules
-
-# Archivos del sistema
+# Ignorar dependencias y archivos de sistema
+node_modules/
+npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Archivos de entorno
-backend/.env
+# Ignorar archivos de entorno y sensibles
+.env
 *.env.local
+backend/.env
+public_html/.env
 
-# Dependencias
-node_modules/
-npm-debug.log*
+# Ignorar archivos generados por build
+public_html/  # ¡Importante! DonWeb usará esta carpeta, pero no debe estar en Git
+build/
+dist/
 
-# Archivos de construcción
-/build
-/dist
-
-# Editor/IDE
+# Ignorar archivos de IDE/Editor
 .vscode/
 .idea/
 
-# Archivos de desarrollo
+# Ignorar archivos de desarrollo y logs
 *.map
 *.log
 
-# Archivos generados automáticamente
-package-lock.json
-yarn.lock
+# Ignorar lock files (elige solo uno según tu gestor)
+package-lock.json  # Si usas npm
+# yarn.lock        # Si usas Yarn
 
-# Backup files
-*.bakpublic_html/.env
-public_html/.env
+# Ignorar archivos temporales y backups
+*.bak
+*.tmp
 
-# Añade estas líneas
-src/
-*.env
-*testfile.txt
+# Añade estos patrones (opcionales pero recomendados)
+/public_html/*       # Ignora todo el contenido (pero mantiene la carpeta)
+!/public_html/README.md  # Excepción (si quieres incluir algún archivo)
 
-base.html
+# Si usas DonWeb con Git, añade:
+.htaccess            # Archivos de configuración del servidor
+*.sql               # Bases de datos
+*.zip               # Archivos comprimidos
