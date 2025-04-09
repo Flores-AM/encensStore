@@ -1,1 +1,32 @@
 node_modules
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno
+.env
+*.env.local
+
+# Dependencias
+node_modules/
+npm-debug.log*
+
+# Archivos de construcción
+/build
+/dist
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Archivos de desarrollo
+*.map
+*.log
+
+# Archivos generados automáticamente
+package-lock.json
+yarn.lock
+
+# Backup files
+*.bak
