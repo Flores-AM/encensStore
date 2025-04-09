@@ -31,3 +31,8 @@ yarn.lock
 # Backup files
 *.bakpublic_html/.env
 public_html/.env
+
+# Añade estas líneas
+src/
+*.env
+testfile.txt
