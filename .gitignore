@@ -5,7 +5,7 @@ node_modules
 Thumbs.db
 
 # Archivos de entorno
-.env
+backend/.env
 *.env.local
 
 # Dependencias
