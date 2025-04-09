@@ -29,4 +29,5 @@ package-lock.json
 yarn.lock
 
 # Backup files
-*.bak
+*.bakpublic_html/.env
+public_html/.env
