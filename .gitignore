@@ -39,3 +39,9 @@ package-lock.json  # Si usas npm
 .htaccess            # Archivos de configuración del servidor
 *.sql               # Bases de datos
 *.zip               # Archivos comprimidos
+
+# Añade esto al final de tu .gitignore:
+/.htaccess
+/.htaccess.*
+/cgi-bin/
+/test.php
