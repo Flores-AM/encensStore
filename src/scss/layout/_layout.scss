@@ -1,0 +1,118 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+.logo {
+    font-family: "Tangerine", cursive;
+    font-size: 3rem;
+    margin: 0;
+    padding: .5rem;
+    color: #fff;
+    background-color: v.$marron;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    
+    a {
+        text-decoration: none;
+            color: #fff;
+        }
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 2rem 5%;
+    background: transparent;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    z-index: 100;
+    transition: all 0.3s ease;
+
+    &.nav-visible {
+        transform: translateY(0);
+        background-color: transparent;
+        
+        // Cambiar color de fondo al hacer scroll
+        &.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    // Estado oculto
+    &.nav-hidden {
+        transform: translateY(-100%);
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 4rem;
+        padding: .5rem 2rem;
+
+        a {
+            font-weight: 200;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            letter-spacing: .5rem;
+            color: #111;
+            padding: 1rem 1.5rem;
+            border-radius: 2rem;
+            transition: all .3s;
+
+            &.active {
+                background-color: #333;
+                color: #fff;
+            }
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .redes {
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+footer {
+    position: relative;
+    background: v.$marron;
+
+    nav {
+        position: relative;
+        padding: 2rem 5%;
+        border-top: .1rem solid #b3b3b3;
+
+        .nav-links {
+
+            a {
+                color: #fff;
+                font-size: 1.5rem;
+                font-weight: normal;
+                text-transform: none;
+                letter-spacing: normal;
+
+                svg {
+                    background-color: #000000;
+                    padding: 0.5rem;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+        .redes {
+            color: #fff;
+        }
+    }
+}

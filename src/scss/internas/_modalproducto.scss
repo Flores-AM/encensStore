@@ -1,0 +1,135 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+/* Estilos del modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+        display: flex;
+    }
+
+    .modal-contenido {
+        background: white; // Añadir fondo
+        width: 80%; 
+        max-width: 900px;
+        max-height: 80vh;
+        display: flex; // Cambiar display
+        position: relative;
+        padding: 20px;
+
+        .cerrar-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-imagen {
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                max-width: max-content;
+                max-height: 40rem;
+                object-fit: cover;
+            }
+        }
+
+        .modal-info {
+            width: 60%;
+            padding: 20px;
+
+            h2, p {
+                margin: 0;
+                padding: 0;
+                font-weight: normal;
+                color: #222;
+            }
+
+            h2 {
+                text-transform: uppercase;
+                font-weight: 600;
+                letter-spacing: .2rem;
+            }
+
+            p:nth-child(2) {
+                font-weight: 100;
+                font-size: 2rem;
+            }
+            p:nth-child(3) {
+                font-weight: 700;
+                font-size: 2rem;
+                letter-spacing: .3rem;
+            }
+
+            .modal-aromas {
+                margin-top: 15px;
+            
+                ul {
+                    columns: 2;
+                    list-style-type: none;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}
+
+
+/* Estilos para la lista de aromas */
+.lista-aromas {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.aroma-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.aroma-sin-stock {
+    color: #999;
+    cursor: not-allowed;
+}
+
+.contador-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contador-cantidad button {
+    width: 25px;
+    height: 25px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.contador-cantidad button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Bloquear scroll cuando el modal está abierto */
+.body-scroll-lock {
+    position: fixed;
+    width: 100%;
+}

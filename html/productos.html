@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../build/css/app.css">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><a href="../index.html">Encens</a></div>
+    
+        <div class="nav-links">
+            <a href="./nosotros.html">Nosotros</a>
+            <a href="./productos.html" class="active">Productos</a>
+            <a href="./contacto.html">Contacto</a>
+        </div>
+    
+        <div class="carrito-icono">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="carrito-contador">0</span>
+        </div>
+    </nav>
+    
+    <!-- Añadir este div para el carrito desplegable -->
+    <div class="carrito-desplegable">
+        <div class="carrito-header">
+          <h3>Tu Pedido</h3>
+          <button class="cerrar-carrito">&times;</button>
+        </div>
+
+        <div class="indicador-pasos">
+            <div class="paso paso-1 activo">
+              <span>1</span>
+              <p>Productos</p>
+            </div>
+            <div class="paso paso-2">
+              <span>2</span>
+              <p>Datos</p>
+            </div>
+            <div class="paso paso-3">
+              <span>3</span>
+              <p>Resumen</p>
+            </div>
+          </div>
+      
+        <!-- Paso 1: Resumen de productos -->
+        <div class="carrito-paso carrito-paso-1 mostrar-paso">
+          <div class="carrito-items"></div>
+          <div class="carrito-total">
+            <p>Total: <span>$0</span></p>
+          </div>
+          <div class="botones">
+            <!-- <button class="carrito-btn carrito-btn--danger boton-vaciar">
+                Vaciar
+              </button> -->
+              <button class="carrito-btn boton-siguiente boton" data-paso="2">
+                <a>→</a>
+              </button>
+          </div>
+        </div>
+      
+        <!-- Paso 2: Formulario de datos -->
+        <div class="carrito-paso carrito-paso-2">
+          <h4>Tus datos</h4>
+          <form id="datos-entrega">
+            <!-- Campos del formulario (nombre, email, dirección, etc.) -->
+            <!-- Nombre (mínimo 5 letras) -->
+                <div class="grupo-form">
+                    <label for="nombre">Nombre completo*</label>
+                    <input type="text" id="nombre" minlength="5" required>
+                    <small class="error-mensaje">Mínimo 5 caracteres</small>
+                </div>
+                
+                <!-- Email (formato válido) -->
+                <div class="grupo-form">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" required>
+                    <small class="error-mensaje">Ingresa un email válido</small>
+                </div>
+                
+                <!-- Teléfono (exactamente 10 números) -->
+                <div class="grupo-form">
+                    <label for="telefono">Teléfono*</label>
+                    <input type="tel" id="telefono" pattern="[0-9]{10}" required>
+                    <small class="error-mensaje">10 números sin espacios</small>
+                </div>
+          
+                <!-- Dirección (mínimo 5 caracteres) -->
+                <div class="grupo-form">
+                    <label for="calle">Calle*</label>
+                    <input type="text" id="calle" minlength="5" required>
+                    <small class="error-mensaje">Mínimo 5 caracteres</small>
+                </div>
+              
+              <div class="grupo-form">
+                <label for="altura">Altura*</label>
+                <input type="text" id="altura" required>
+              </div>
+              
+              <div class="grupo-form">
+                <label for="entre-calles">Entre calles</label>
+                <input type="text" id="entre-calles">
+              </div>
+              
+              <div class="grupo-form">
+                <label for="localidad">Localidad*</label>
+                <input type="text" id="localidad" required>
+              </div>
+          
+              <div class="grupo-form">
+                <label for="codigo-postal">Código Postal</label>
+                <input type="text" id="codigo-postal">
+              </div>
+            <!-- ... más campos ... -->
+            <div class="botones botones-datos">
+                <button class="carrito-btn boton boton-anterior"  data-paso="1">
+                    <a>←</a>
+                  </button>
+                <button type="submit" class="carrito-btn boton boton-siguiente" data-ico="→" data-paso="3"><a>→</a></button>
+            </div>
+          </form>
+        </div>
+      
+        <!-- Paso 3: Resumen final -->
+        <div class="carrito-paso carrito-paso-3">
+          <h4>Resumen del pedido</h4>
+          <div class="resumen-productos"></div>
+          <div class="resumen-total">
+            <p><strong>Total:</strong> <span id="total-resumen">$0</span></p>
+          </div>
+          <div class="resumen-datos">
+            <p><strong>Nombre:</strong> <span id="resumen-nombre"></span></p>
+            <p><strong>Email:</strong> <span id="resumen-email"></span></p>
+            <p><strong>Teléfono:</strong> <span id="resumen-telefono"></span></p>
+            <p><strong>Calle:</strong> <span id="resumen-calle"></span></p>
+            <p><strong>Altura:</strong> <span id="resumen-altura"></span></p>
+            <p><strong>Entre Calles:</strong> <span id="resumen-entre-calles"></span></p>
+            <p><strong>Localidad:</strong> <span id="resumen-localidad"></span></p>
+            <p><strong>Código Postal:</strong> <span id="resumen-codigo-postal"></span></p>
+            <!-- ... más datos ... -->
+          </div>
+          <div class="botones botones-resumen">
+              <button class="carrito-btn boton boton-anterior" data-paso="2">
+                <a>←</a>
+              </button>
+              <button class="carrito-btn boton boton-pagar">
+                <a>Finalizar Compra</a>
+            </button>
+          </div>
+        </div>
+    </div>
+    <div class="carrito-overlay"></div>
+
+    <section class="fondo-productos">
+        <h3>Con tu compra tenes</h3>
+        <h1 class="titulo-productos">¡Envio gratis!</h1>
+        <h3>En todo General Pacheco</h3>
+
+    </section>
+
+    <div class="opciones">
+
+        <input type="radio" name="opcion" id="todo" value="" checked>
+        <label for="todo">Todos</label>
+
+        <input type="radio" name="opcion" id="satya" value="Satya">
+        <label for="satya">Satya</label>
+        
+        <input type="radio" name="opcion" id="sagrada-madre" value="Sagrada Madre">
+        <label for="sagrada-madre">Sagrada Madre</label>
+
+        <input type="radio" name="opcion" id="aromanza" value="Aromanza">
+        <label for="aromanza">Aromanza</label>
+    </div>
+
+    <div class="filtros">
+
+    </div>
+
+    <section class="contenedor-productos">
+
+        <div class="caja-productos">
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <!-- Modal -->
+    <div id="producto-modal" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <div class="modal-imagen">
+                <img id="modal-imagen" src="" alt="">
+            </div>
+            <div class="modal-info">
+                <h2 id="modal-linea"></h2>
+                <p class="modal-marca" id="modal-marca"></p>
+                <p class="modal-precio" id="modal-precio"></p>
+                <div class="modal-aromas">
+                    <h3>Aromas disponibles:</h3>
+                    <div id="modal-lista-aromas" class="lista-aromas"></div>
+                    <div class="modal-acciones">
+                        <button id="btn-agregar-carrito" class="boton boton-agregar-carrito"><a>Añadir al carrito</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <nav>
+            <div class="logo">Encens</div>
+    
+            <div class="nav-links">
+                <a href="#">correo@correo.com</a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path> <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path> <path d="M16.5 7.5l0 .01"></path> </svg></a>
+            </div>
+    
+            <div class="redes">
+                ©FloresWD
+            </div>
+        </nav>
+    </footer>
+
+    <script src="../build/js/bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+/* Estilos del carrito */
+.carrito-icono {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.carrito-icono svg {
+    width: 24px;
+    height: 24px;
+}
+
+.carrito-contador {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #8b5a2b;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.carrito-desplegable {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+.carrito-desplegable.active {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    right: 0;
+}
+
+.carrito-contenido h3 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.carrito-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.carrito-item-info h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.carrito-item-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.eliminar-item {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.eliminar-item:hover {
+    color: #d9534f;
+}
+
+.carrito-total {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Overlay para cuando el carrito está abierto */
+.carrito-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+
+.carrito-desplegable.active + .carrito-overlay {
+    display: block;
+}
+
+/* Estilos para el header del carrito */
+.carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cerrar-carrito {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+    padding: 0 10px;
+}
+
+.cerrar-carrito:hover {
+    color: #333;
+}
+
+/* Estilos para el overlay */
+.carrito-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.carrito-desplegable {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 350px;
+    height: 100%;
+    background-color: white;
+    z-index: 999;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+}
+
+.carrito-desplegable.active {
+    right: 0;
+}
+
+// Notificaciones
+
+.notificacion-global {
+    position: fixed;
+    top: 7rem;
+    // left: 0;
+    right: 7rem;
+    // margin: 0 auto;
+    width: fit-content;
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    background-color: #4CAF50;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+
+.notificacion-global.exito {
+    background-color: #4CAF50;
+}
+
+.notificacion-global.error {
+    background-color: #f44336;
+}
+
+// Pasos Carrito
+
+.carrito-paso {
+    display: none;
+    padding: 15px;
+    animation: fadeIn 0.3s ease;
+  }
+  
+.mostrar-paso {
+display: block;
+}
+  
+.boton-anterior, .boton-siguiente, .boton-vaciar {
+margin-top: 10px;
+}
+  
+/* Efecto de transición */
+@keyframes fadeIn {
+from { opacity: 0; transform: translateX(10px); }
+to { opacity: 1; transform: translateX(0); }
+}
+
+// Indicador de pasos 1/2 2/2 etc
+
+.indicador-pasos {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    position: relative;
+  }
+  
+  .indicador-pasos::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ddd;
+    z-index: 1;
+  }
+  
+  .paso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+  
+  .paso span {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+  
+  .paso p {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .paso.activo span {
+    background: #4CAF50;
+    color: white;
+  }
+  
+  .paso.activo p {
+    color: #4CAF50;
+    font-weight: bold;
+  }
+
+  // Campos Invalidos
+
+  .invalido {
+    border-color: #f44336 !important;
+  }
+  
+  .error-mensaje {
+    display: none;
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 5px;
+  }

@@ -1,0 +1,274 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+header {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 30%;
+        height: 100%;
+        background-color: v.$crema;
+        // border-bottom-left-radius: 10rem;
+        border-bottom-left-radius: 15rem;
+        border-bottom-right-radius: 15rem;
+        z-index: -1;
+    }
+
+    .titulo {
+        width: 60%;
+        height: 65%;
+        place-self: center;
+        place-content: center;
+
+        h2, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            // font-family: "Tangerine", cursive;
+            font-weight: 500;
+            font-size: 1.7rem;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 7rem;
+            letter-spacing: 1.8rem;
+            color: #111;
+        }
+
+        p {
+            font-weight: 200;
+            font-size: 1.6rem;
+        }
+    }
+
+    .imagen-titulo {
+        position: absolute;
+        top: 0;
+        left: 45%;
+        bottom: 0;
+        width: fit-content;
+        height: fit-content;
+        place-content: center;
+        place-self: center;
+        z-index: -1;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            // background-color: #0000003a;
+        }
+
+        img {
+            max-width: 70rem;
+        }
+
+    }
+
+    .marcas {
+        display: flex;
+        gap: 10rem;
+        width: 60%;
+
+        a {
+            // font-family: "Tangerine", cursive;
+            font-weight: 500;
+            font-size: 1.7rem;
+            letter-spacing: .2rem;
+            text-decoration: none;
+            color: #222;
+        }
+    }
+}
+
+.cartel-lomasvendido {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // gap: 5rem;
+    width: 90%;
+    height: 100vh;
+    margin: 0 auto;
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -15%;
+        bottom: 0;
+        margin: auto;
+        width: 60rem;
+        height: 60rem;
+        background-color: v.$crema;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    &.cartel-lomasvendido2 {
+
+        &::before {
+            left: auto;
+            right: -20% !important;
+            width: 60%;
+            height: 40rem;
+            border-radius: 50%;
+            transform: rotate(30deg);
+
+        }
+    }
+
+    h1 {
+        // font-family: "Tangerine", cursive;
+        position: relative;
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 5rem;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 900;
+        font-size: 3.5rem;
+        letter-spacing: 1.7rem;
+        color: #222;
+
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -1rem;
+            left: -20%;
+            width: 70%;
+            height: 140%;
+            // background-color: v.$crema;
+            border-top-right-radius: 5rem;
+            border-bottom-right-radius: 5rem;
+            z-index: -1;
+        }
+    }
+
+    .contenedor-cartas {
+        width: auto;
+        height: auto;
+        display: flex;
+
+        .carta-producto {
+            max-width: 40rem;
+    
+            .img-producto {
+                display: block;
+                width: 25rem;
+                height: 35rem;
+                background: url(/build/img/sahum11.jpg);
+                background-size: cover !important;
+                background-position: bottom;
+                border-top-left-radius: 15rem;
+                border-top-right-radius: 15rem;
+                margin: 0 auto;
+            }
+        
+            .img-producto2 {
+                background: url(/build/img/sahum13.jpg);
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 15rem;
+                border-bottom-right-radius: 15rem;
+            }
+        
+            .img-producto3 {
+                background: url(/build/img/sahum12.jpg);
+            }
+
+            .img-producto4 {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 15rem;
+                background: url(/build/img/sahum5.jpg);
+            }
+            .img-producto5 {
+                background: url(/build/img/sahum8.jpg);
+            }
+            .img-producto6 {
+                border-top-left-radius: 0;
+                background: url(/build/img/sahum7.avif);
+            }
+        
+            h3, p {
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+        
+            h3 {
+                font-family: "Tangerine", cursive;
+                font-size: 5rem;
+            }
+        
+            p {
+                font-size: 1.5rem;
+                font-weight: 200;
+            }
+        }
+    }
+}
+
+.conectemos {
+    position: relative;
+    width: 70%;
+    margin: 0 auto;
+    padding: 7rem 1rem;
+    background: linear-gradient(#00000096, #00000096), url(/build/img/sahum10.jpg);
+    background-size: cover;
+    background-position: center center;
+    border-radius: 4rem;
+
+    h1, h3, p {
+        text-align: center;
+        width: 100%;
+        color: #fff;
+    }
+
+    h1 {
+        font-weight: 100;
+        font-size: 3.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1rem;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: .3rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+        font-weight: 200;
+        width: 50%;
+        margin: 0 auto;
+        // background-color: #a09483;
+        // color: #fff;
+        padding: 2rem;
+    }
+}
