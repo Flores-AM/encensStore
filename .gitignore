@@ -36,3 +36,5 @@ public_html/.env
 src/
 *.env
 testfile.txt
+
+base.html
