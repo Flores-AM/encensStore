@@ -12,6 +12,7 @@ const cache = require('gulp-cache');
 const clean = require('gulp-clean');
 const webp = require('gulp-webp');
 const plumber = require('gulp-plumber');
+const order = require('gulp-order');
 
 const paths = {
     scss: 'src/scss/**/*.scss',
@@ -30,24 +31,26 @@ function css() {
 }
 
 function javascript() {
-    return src([
-        'src/js/global.js',
-        'src/js/db.js', 
-        'src/js/carrito.js',
-        'src/js/app.js',
-        'src/js/navScroll.js',
-        'src/js/init.js'
-    ])
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(concat('bundle.min.js'))
-    .pipe(terser())
-    .pipe(sourcemaps.write('.'))
-    .pipe(dest('build/js'));
+    return src('src/js/**/*.js')
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(order([  // Orden explícito
+            'src/js/global.js',
+            'src/js/db.js',
+            'src/js/carrito.js',
+            'src/js/app.js',
+            'src/js/navScroll.js',
+            'src/js/init.js'
+        ]))
+        .pipe(concat('bundle.min.js'))
+        .pipe(terser())
+        .pipe(sourcemaps.write('.'))
+        .pipe(dest('build/js'));
 }
 
 function imagenes() {
     return src('src/img/**/*.{jpg,jpeg,png,gif,svg}')
+        .pipe(cache(imagemin({ optimizationLevel: 3 }))) // ← Compresión
         .pipe(dest('build/img'));
 }
 
@@ -57,15 +60,32 @@ function versionWebp() {
         .pipe(dest('build/img'));
 }
 
+function copyHtml() {
+    return src('index.html')
+        .pipe(dest('build'));
+}
+
+const htmlmin = require('gulp-htmlmin');
+
+function minifyHtml() {
+    return src('index.html')
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(dest('build'));
+}
+
 // Nueva tarea para el backend
 function backend() {
     return src([
-        'backend/**/*.js',
-        'backend/.env',
+        'backend/server.js',
+        'backend/controllers/*.js',
+        'backend/models/*.js',
+        'backend/routes/*.js',
         'backend/package.json',
-        'backend/package-lock.json'
+        'backend/package-lock.json',
+        '!backend/.env' // ← Excluye .env
     ], { allowEmpty: true })
-    .pipe(dest('build/backend'));
+    .pipe(plumber()) // ← Manejo de errores
+    .pipe(dest('build'));
 }
 
 function watchArchivos() {
@@ -89,6 +109,11 @@ exports.limpiar = limpiarBuild;
 exports.watchArchivos = watchArchivos;
 exports.default = series(
     limpiarBuild,
-    parallel(css, javascript, imagenes, versionWebp, backend), // Incluye backend
+    parallel(css, javascript, imagenes, versionWebp, backend, copyHtml),
     watchArchivos
+);
+
+exports.prod = series(
+    limpiarBuild,
+    parallel(css, javascript, imagenes, versionWebp, backend, copyHtml, minifyHtml)
 );
